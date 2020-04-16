@@ -42,7 +42,7 @@ pipeline {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh "docker login --username $USERNAME --password $PASSWORD"
-                        sh "docker login --username gheorghecater --password flavius1357"
+                       // sh "docker login --username gheorghecater --password flavius1357"
                          }
                     }
                 }

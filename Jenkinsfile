@@ -37,21 +37,27 @@ pipeline {
                         }
                 }
 
-          stage("Docker login") {
-               steps    {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
-                               usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                        sh "docker login --username $USERNAME --password $PASSWORD"
+         // stage("Docker login") {
+               //steps    {
+                   // withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
+                              // usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                       // sh "docker login --username $USERNAME --password $PASSWORD"
                        // sh "docker login --username gheorghecater --password flavius1357"
-                         }
-                    }
-                }
-
-          stage("Docker push") {
-               steps    {
-                    sh "docker push gheorghecater/calculator:${BUILD_TIMESTAMP}"
-                        }
-                    }
+                        // }
+                   // }
+                //}
+           stage('Push image') {
+        /* Push image using withRegistry. */
+                     docker.withRegistry('<your docker registry>', 'docker-private-credentials') {
+                     app.push("${env.BUILD_NUMBER}")
+                     app.push("latest")
+                                 }
+                       }
+          //stage("Docker push") {
+              // steps    {
+                    //sh "docker push gheorghecater/calculator:${BUILD_TIMESTAMP}"
+                       // }
+                   // }
 
           stage("Update version") {
                steps    {

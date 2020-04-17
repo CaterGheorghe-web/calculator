@@ -46,9 +46,9 @@ pipeline {
                         // }
                    // }
                 //}
-           stage('Push image') {
+           stage("Push image") {
         /* Push image using withRegistry. */
-                     docker.withRegistry('808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', 'ecr.eu-west-3:calculator-ecr-credentials') {
+                     docker.withRegistry('aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', 'ecr.eu-west-3:calculator-ecr-credentials') {
                      app.push("${env.BUILD_NUMBER}")
                      app.push("latest")
                                  }

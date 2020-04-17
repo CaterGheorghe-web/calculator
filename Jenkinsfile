@@ -48,7 +48,7 @@ pipeline {
                 //}
            stage('Push image') {
         /* Push image using withRegistry. */
-                     docker.withRegistry('<your docker registry>', 'docker-private-credentials') {
+                     docker.withRegistry('aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', 'calculator-ecr-credentials') {
                      app.push("${env.BUILD_NUMBER}")
                      app.push("latest")
                                  }
@@ -64,7 +64,7 @@ pipeline {
                     sh "sed  -i 's/{{VERSION}}/${BUILD_TIMESTAMP}/g' calculator.yaml"
                          }
                 }
-          
+
           stage("Deploy to staging") {
                steps     {
                     sh "kubectl config use-context staging"

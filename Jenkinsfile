@@ -37,27 +37,27 @@ pipeline {
                         }
                 }
 
-         // stage("Docker login") {
-               //steps    {
-                   // withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
-                              // usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                       // sh "docker login --username $USERNAME --password $PASSWORD"
+           stage("Docker login") {
+                steps    {
+                   withCredentials([[$class: 'aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', credentialsId: 'calculator-ecr-credentials',
+                               usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                       sh "docker login --username $USERNAME --password $PASSWORD"
                        // sh "docker login --username gheorghecater --password flavius1357"
-                        // }
-                   // }
-                //}
-           stage("Push image") {
+                         }
+                   }
+                }
+           //stage("Push image") {
         /* Push image using withRegistry. */
-                     docker.withRegistry('aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', 'ecr.eu-west-3:calculator-ecr-credentials') {
-                     app.push("${env.BUILD_NUMBER}")
-                     app.push("latest")
-                                 }
-                       }
-          //stage("Docker push") {
-              // steps    {
-                    //sh "docker push gheorghecater/calculator:${BUILD_TIMESTAMP}"
-                       // }
-                   // }
+                    // docker.withRegistry('aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', 'ecr.eu-west-3:calculator-ecr-credentials') {
+                    // app.push("${env.BUILD_NUMBER}")
+                    // app.push("latest")
+                               //  }
+                      // }
+          stage("Docker push") {
+              steps    {
+                    sh "docker push gheorghecater/calculator:${BUILD_TIMESTAMP}"
+                        }
+                    }
 
           stage("Update version") {
                steps    {

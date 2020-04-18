@@ -39,7 +39,7 @@ pipeline {
 
            stage("Docker login") {
                           steps {
-                               withCredentials([[$class: 'aws ecr get-login-password --region eu-west-3', credentialsId: 'calculator-ecr-credentials',
+                               withCredentials([[$class: 'aws ecr', credentialsId: 'calculator-ecr-credentials',
                                           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                                     sh "docker login --username $USERNAME --password $PASSWORD"
                                }

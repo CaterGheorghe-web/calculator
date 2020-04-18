@@ -55,7 +55,7 @@ pipeline {
                       // }
           stage("Docker push") {
               steps    {
-                    sh "docker push gheorghecater/calculator:${BUILD_TIMESTAMP}"
+                    sh "docker push 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator:latest"
                         }
                     }
 

@@ -48,7 +48,7 @@ pipeline {
                      stage("Docker push") {
                           steps {
                         sh "docker login -u gheorghecater -p flavius1357"
-                        sh "docker tag gheorghecater/calculator:firsttry "
+                        sh "docker tag calculator:1.0 gheorghecater/calculator:firsttry "
                         sh "docker push gheorghecater/calculator"
                           }
                      }

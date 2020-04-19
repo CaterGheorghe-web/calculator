@@ -58,12 +58,12 @@ pipeline {
                     // app.push("latest")
                                //  }
                       // }
-          stage("Docker push") {
-              steps    {
-                    sh "docker tag calculator:latest 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator:latest"
-                    sh "docker push 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator:latest"
-                        }
-                    }
+          //stage("Docker push") {
+             // steps    {
+                   // sh "docker tag calculator:latest 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator:latest"
+                   // sh "docker push 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator:latest"
+                       // }
+                   // }
 
           stage("Update version") {
                steps    {

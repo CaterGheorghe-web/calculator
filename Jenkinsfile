@@ -37,12 +37,18 @@ pipeline {
                         }
                 }
 
-           stage("Docker login") {
+          // stage("Docker login") {
+                         // steps {
+                              // withCredentials([[$class: 'https://808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', credentialsId: 'ecr.eu-west-3:calculator-ecr-credentials',
+                                         // usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                                    //sh "docker login --username $USERNAME --password $PASSWORD"
+                               //}
+                          //}
+                     //}
+                     stage("Docker push") {
                           steps {
-                               withCredentials([[$class: 'https://808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', credentialsId: 'ecr.eu-west-3:calculator-ecr-credentials',
-                                          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                                    sh "docker login --username $USERNAME --password $PASSWORD"
-                               }
+                        sh "docker login -u gheorghecater -p flavius1357"
+                     sh "docker push gheorghecater/calculator:1.0"
                           }
                      }
            //stage("Push image") {

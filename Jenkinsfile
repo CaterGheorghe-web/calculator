@@ -39,7 +39,7 @@ pipeline {
 
            stage("Docker login") {
                           steps {
-                               withCredentials([[$class: 'ec2-35-181-151-53.eu-west-3.compute.amazonaws.com', credentialsId: 'calculator-ecr-credentials',
+                               withCredentials([[$class: 'ec2-user@ec2-35-181-151-53.eu-west-3.compute.amazonaws.com', credentialsId: 'calculator-ecr-credentials',
                                           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                                     sh "docker login --username $USERNAME --password $PASSWORD"
                                }

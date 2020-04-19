@@ -48,7 +48,7 @@ pipeline {
                      stage("Docker push") {
                           steps {
                         sh "docker login -u gheorghecater -p flavius1357"
-                     sh "docker push gheorghecater/calculator "
+                     sh "docker push gheorghecater/calculator:1.0 "
                           }
                      }
            //stage("Push image") {

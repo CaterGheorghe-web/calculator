@@ -33,25 +33,24 @@ pipeline {
 
           stage("Docker build") {
                steps    {
-                    sh "docker build -t calculator:1.0 ."
+                    sh "docker build -t calculator:latest ."
                         }
                 }
 
-          // stage("Docker login") {
-                         // steps {
-                              // withCredentials([[$class: 'https://808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', credentialsId: 'ecr.eu-west-3:calculator-ecr-credentials',
-                                         // usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                                    //sh "docker login --username $USERNAME --password $PASSWORD"
-                               //}
-                          //}
-                     //}
-                     stage("Docker push") {
+           stage("Docker login") {
                           steps {
-                        sh "docker login -u gheorghecater -p flavius1357"
-                        sh "docker tag calculator:1.0 gheorghecater/calculator:firsttry "
-                        sh "docker push gheorghecater/calculator"
+                               withCredentials([[$class: 'https://808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', credentialsId: 'ecr.eu-west-3:calculator-ecr-credentials',
+                                          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                                    sh "docker login --username $USERNAME --password $PASSWORD"
+                               }
                           }
                      }
+                    // stage("Docker push") {
+                        //sh "docker login -u gheorghecater -p flavius1357"
+                       // sh "docker tag calculator:1.0 gheorghecater/calculator:firsttry "
+                       // sh "docker push gheorghecater/calculator"
+                        //  }
+                   //  }
            //stage("Push image") {
         /* Push image using withRegistry. */
                     // docker.withRegistry('aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', 'ecr.eu-west-3:calculator-ecr-credentials') {
@@ -59,12 +58,12 @@ pipeline {
                     // app.push("latest")
                                //  }
                       // }
-          //stage("Docker push") {
-             // steps    {
-                   // sh "docker tag calculator:latest 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator:latest"
-                   // sh "docker push 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator:latest"
-                       // }
-                   // }
+          stage("Docker push") {
+             steps    {
+                   sh "docker tag calculator:latest  808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator:latest"
+                   sh "docker push 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator:latest"
+                        }
+                    }
 
          // stage("Update version") {
               // steps    {

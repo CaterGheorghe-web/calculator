@@ -47,7 +47,7 @@ pipeline {
                      //}
                      stage("Docker push") {
                           steps {
-                        sh "docker login --username gheorghecater --password-stdin flavius1357"
+                        sh "docker login -u gheorghecater -p flavius1357"
                      sh "docker push gheorghecater/calculator:1.0"
                           }
                      }

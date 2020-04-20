@@ -1,5 +1,13 @@
 pipeline {
      agent any
+     environment
+         {
+             VERSION = 'latest'
+             PROJECT = 'calculator'
+             IMAGE = 'calculator:latest'
+             ECRURL = 'http://808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator'
+             ECRCRED = 'ecr.eu-west-3:calculator-ecr-credentials'
+         }
      triggers {
           pollSCM('* * * * *')
           }
@@ -36,15 +44,32 @@ pipeline {
                     sh "docker build -t calculator:latest ."
                         }
                 }
+                stage('Docker push')
+                        {
+                            steps
+                            {
+                                script
+                                {
+                                    // login to ECR - for now it seems that that the ECR Jenkins plugin is not performing the login as expected. I hope it will in the future.
+                                    sh("eval \$(aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator)")
+                                    // Push the Docker image to ECR
+                                    docker.withRegistry(ECRURL, ECRCRED)
+                                    {
+                                        docker.image(IMAGE).push()
+                                    }
+                                }
+                            }
+                        }
+                    }
 
-           stage("Docker login") {
-                          steps {
-                               withCredentials([[$class: 'aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', credentialsId: 'ecr.eu-west-3:calculator-ecr-credentials',
-                                          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                                    sh "docker login --username $USERNAME --password $PASSWORD"
-                               }
-                          }
-                     }
+          // stage("Docker login") {
+                          //steps {
+                               //withCredentials([[$class: 'aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator', credentialsId: 'ecr.eu-west-3:calculator-ecr-credentials',
+                                          //usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                                   // sh "docker login --username $USERNAME --password $PASSWORD"
+                              // }
+                         // }
+                    // }
                     // stage("Docker push") {
                         //sh "docker login -u gheorghecater -p flavius1357"
                        // sh "docker tag calculator:1.0 gheorghecater/calculator:firsttry "

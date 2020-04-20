@@ -60,7 +60,7 @@ pipeline {
                                 }
                             }
                         }
-                    }
+
 
           // stage("Docker login") {
                           //steps {

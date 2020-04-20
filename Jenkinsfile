@@ -6,7 +6,7 @@ pipeline {
              PROJECT = 'calculator'
              IMAGE = 'calculator:latest'
              ECRURL = 'http://808995289075.dkr.ecr.eu-west-3.amazonaws.com/calculator'
-             ECRCRED = 'ecr:calculator-ecr-credentials'
+             ECRCRED = 'ecr:eu-west-3:calculator-ecr-credentials'
          }
      triggers {
           pollSCM('* * * * *')

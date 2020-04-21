@@ -88,10 +88,10 @@ pipeline {
 
          stage("Deploy to staging") {
                steps     {
-                    sh "kubectl config use-context staging"
-                    sh "kubectl apply -f hazelcast.yaml"
-                    sh "kubectl apply -f calculator.yaml"
-                    sh " docker run -d --rm -p 8765:9090 --name calculator gheorghecater/calculator"
+                   // sh "kubectl config use-context staging"
+                   // sh "kubectl apply -f hazelcast.yaml"
+                   // sh "kubectl apply -f calculator.yaml"
+                    sh " docker run -d --rm -p 8765:8080 --name calculator gheorghecater/calculator"
                         }
                 }
 
